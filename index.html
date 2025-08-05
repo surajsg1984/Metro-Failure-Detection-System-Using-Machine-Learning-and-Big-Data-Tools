@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LSTM Prediction App</title>
+</head>
+<body>
+    <h2>Enter Features</h2>
+    <form action="/predict" method="post">
+
+        <!-- Numeric Inputs -->
+        <input type="number" name="TP2" placeholder="TP2" step="any" required><br>
+        <input type="number" name="TP3" placeholder="TP3" step="any" required><br>
+        <input type="number" name="H1" placeholder="H1" step="any" required><br>
+        <input type="number" name="DV_pressure" placeholder="DV_pressure" step="any" required><br>
+        <input type="number" name="Reservoirs" placeholder="Reservoirs" step="any" required><br>
+        <input type="number" name="Oil_temperature" placeholder="Oil_temperature" step="any" required><br>
+        <input type="number" name="Motor_current" placeholder="Motor_current" step="any" required><br>
+        <input type="number" name="COMP" placeholder="COMP" step="any" required><br>
+
+        <!-- Dropdown Inputs -->
+        <label for="DV_eletric">DV_eletric:</label>
+        <select name="DV_eletric" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </select><br>
+
+        <label for="Towers">Towers:</label>
+        <select name="Towers" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </select><br>
+
+        <label for="MPG">MPG:</label>
+        <select name="MPG" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </select><br>
+
+        <label for="LPS">LPS:</label>
+        <select name="LPS" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </select><br>
+
+        <label for="Pressure_switch">Pressure_switch:</label>
+        <select name="Pressure_switch" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </select><br>
+
+        <label for="Oil_level">Oil_level:</label>
+        <select name="Oil_level" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </select><br>
+
+        <label for="Caudal_impulses">Caudal_impulses:</label>
+        <select name="Caudal_impulses" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+        </select><br>
+
+        <!-- Submit Button -->
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction %}
+        <h3>Prediction: {{ prediction }}</h3>
+    {% endif %}
+</body>
+</html>
