@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # Load the LSTM model
 import requests
-url = "https://github.com/surajsg1984/Metro-Failure-Detection-System-Using-Machine-Learning-and-Big-Data-Tools/blob/main/lstm_model.keras"
+url = "lstm_model.keras"
 open("lstm_model.keras", "wb").write(requests.get(url).content)
 model = load_model("lstm_model.keras")
 
@@ -39,4 +39,5 @@ def predict():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
