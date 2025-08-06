@@ -4,40 +4,53 @@ import numpy as np
 
 app = Flask(__name__)
 
-# Load the LSTM model
-import requests
-url = "lstm_model.keras"
-open("lstm_model.keras", "wb").write(requests.get(url).content)
+# Load model
 model = load_model("lstm_model.keras")
 
-
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def home():
     return render_template("index.html")
 
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
-        # Get features from the form
-        features = [
-            float(request.form["f1"]),
-            float(request.form["f2"]),
-            float(request.form["f3"]),
-            float(request.form["f4"])
+        # Get numeric features
+        num_features = [
+            float(request.form["TP2"]),
+            float(request.form["TP3"]),
+            float(request.form["H1"]),
+            float(request.form["DV_pressure"]),
+            float(request.form["Reservoirs"]),
+            float(request.form["Oil_temperature"]),
+            float(request.form["Motor_current"]),
+            float(request.form["COMP"])
         ]
-        
-        # Convert to numpy array and reshape for LSTM
-        # Assuming LSTM expects shape: (samples, timesteps, features)
-        input_data = np.array(features).reshape((1, 1, len(features)))
-        
-        # Make prediction
+
+        # Get dropdown features (as integers)
+        dropdown_features = [
+            int(request.form["DV_eletric"]),
+            int(request.form["Towers"]),
+            int(request.form["MPG"]),
+            int(request.form["LPS"]),
+            int(request.form["Pressure_switch"]),
+            int(request.form["Oil_level"]),
+            int(request.form["Caudal_impulses"])
+        ]
+
+        # Combine all features
+        all_features = num_features + dropdown_features
+
+        # Reshape for LSTM: (samples, timesteps, features)
+        input_data = np.array(all_features).reshape((1, 1, len(all_features)))
+
+        # Predict
         prediction = model.predict(input_data)
-        
-        return render_template("index.html", prediction=str(prediction[0][0]))
+        prediction_value = float(prediction[0][0])
+
+        return render_template("index.html", prediction=prediction_value)
+
     except Exception as e:
-        return render_template("index.html", prediction=f"Error: {e}")
+        return render_template("index.html", prediction=f"Error: {str(e)}")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-
-
