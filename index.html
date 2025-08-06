@@ -2,70 +2,130 @@
 <html>
 <head>
     <title>LSTM Prediction App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f6f9;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: #fff;
+            padding: 25px 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        label {
+            font-weight: bold;
+            color: #444;
+        }
+        button {
+            width: 100%;
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .prediction {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            padding: 10px;
+            background: #e9f7ef;
+            border: 1px solid #c3e6cb;
+            border-radius: 6px;
+            color: #155724;
+        }
+    </style>
 </head>
 <body>
-    <h2>Enter Features</h2>
-    <form action="/predict" method="post">
+    <div class="container">
+        <h2>LSTM Prediction App</h2>
+        <form action="/predict" method="post">
 
-        <!-- Numeric Inputs -->
-        <input type="number" name="TP2" placeholder="TP2" step="any" required><br>
-        <input type="number" name="TP3" placeholder="TP3" step="any" required><br>
-        <input type="number" name="H1" placeholder="H1" step="any" required><br>
-        <input type="number" name="DV_pressure" placeholder="DV_pressure" step="any" required><br>
-        <input type="number" name="Reservoirs" placeholder="Reservoirs" step="any" required><br>
-        <input type="number" name="Oil_temperature" placeholder="Oil_temperature" step="any" required><br>
-        <input type="number" name="Motor_current" placeholder="Motor_current" step="any" required><br>
-        <input type="number" name="COMP" placeholder="COMP" step="any" required><br>
+            <!-- Numeric Inputs -->
+            <input type="number" name="TP2" placeholder="TP2" step="any" required>
+            <input type="number" name="TP3" placeholder="TP3" step="any" required>
+            <input type="number" name="H1" placeholder="H1" step="any" required>
+            <input type="number" name="DV_pressure" placeholder="DV_pressure" step="any" required>
+            <input type="number" name="Reservoirs" placeholder="Reservoirs" step="any" required>
+            <input type="number" name="Oil_temperature" placeholder="Oil_temperature" step="any" required>
+            <input type="number" name="Motor_current" placeholder="Motor_current" step="any" required>
+            <input type="number" name="COMP" placeholder="COMP" step="any" required>
 
-        <!-- Dropdown Inputs -->
-        <label for="DV_eletric">DV_eletric:</label>
-        <select name="DV_eletric" required>
-            <option value="0">0</option>
-            <option value="1">1</option>
-        </select><br>
+            <!-- Dropdown Inputs -->
+            <label>DV_eletric:</label>
+            <select name="DV_eletric" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+            </select>
 
-        <label for="Towers">Towers:</label>
-        <select name="Towers" required>
-            <option value="0">0</option>
-            <option value="1">1</option>
-        </select><br>
+            <label>Towers:</label>
+            <select name="Towers" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+            </select>
 
-        <label for="MPG">MPG:</label>
-        <select name="MPG" required>
-            <option value="0">0</option>
-            <option value="1">1</option>
-        </select><br>
+            <label>MPG:</label>
+            <select name="MPG" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+            </select>
 
-        <label for="LPS">LPS:</label>
-        <select name="LPS" required>
-            <option value="0">0</option>
-            <option value="1">1</option>
-        </select><br>
+            <label>LPS:</label>
+            <select name="LPS" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+            </select>
 
-        <label for="Pressure_switch">Pressure_switch:</label>
-        <select name="Pressure_switch" required>
-            <option value="0">0</option>
-            <option value="1">1</option>
-        </select><br>
+            <label>Pressure_switch:</label>
+            <select name="Pressure_switch" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+            </select>
 
-        <label for="Oil_level">Oil_level:</label>
-        <select name="Oil_level" required>
-            <option value="0">0</option>
-            <option value="1">1</option>
-        </select><br>
+            <label>Oil_level:</label>
+            <select name="Oil_level" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+            </select>
 
-        <label for="Caudal_impulses">Caudal_impulses:</label>
-        <select name="Caudal_impulses" required>
-            <option value="0">0</option>
-            <option value="1">1</option>
-        </select><br>
+            <label>Caudal_impulses:</label>
+            <select name="Caudal_impulses" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+            </select>
 
-        <!-- Submit Button -->
-        <button type="submit">Predict</button>
-    </form>
+            <button type="submit">Predict</button>
+        </form>
 
-    {% if prediction %}
-        <h3>Prediction: {{ prediction }}</h3>
-    {% endif %}
+        {% if prediction is not none %}
+            <div class="prediction">
+                Prediction: {{ prediction }}
+            </div>
+        {% endif %}
+    </div>
 </body>
 </html>
