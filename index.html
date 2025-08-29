@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>MetroPT3</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+  
+</head>
+
+<body>
+	<h1>Metro Failuer Detection System</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+      <h3>Analog Signal</h3>
+    	<input type="text" name="TP2" placeholder="TP2  (in bar)" required="required" />
+      <input type="text" name="TP3" placeholder="TP3 (in bar)" required="required" />
+      <input type="text" name="H1 (bar)" placeholder="H1 (bar)" required="required" />
+      <input type="text" name="DV pressure (bar)" placeholder="DV pressure (bar)" required="required" />
+      <input type="text" name="Reservoirs (bar)" placeholder="Reservoirs (bar)" required="required" />
+      <input type="text" name="Motor Current (A)" placeholder="Motor Current (A)" required="required" />
+      <input type="text" name="Oil Temperature (ºC)" placeholder="Oil Temperature (ºC)" required="required" />
+      <h3>Digital Signal</h3>
+      <input type="text" name="COMP" placeholder="COMP" required="required" />
+      <input type="text" name="DV electric" placeholder="DV electric" required="required" />
+      <input type="text" name="TOWERS" placeholder="TOWERS" required="required" />
+      <input type="text" name="MPG" placeholder="MPG" required="required" />
+      <input type="text" name="LPS" placeholder="LPS" required="required" />
+      <input type="text" name="Pressure Switch" placeholder="Pressure Switch" required="required" />
+      <input type="text" name="Oil Level" placeholder="Oil Level" required="required" />
+      <input type="text" name="Caudal Impulse" placeholder="Caudal Impulse" required="required" />
+      <br><br><br>
+      
+      <button type="submit" class="btn btn-primary btn-block btn-large">Predict Colories Burnt</button>
+    </form>
+
+   <br>
+   <br>
+   {{ prediction_text }}
+
+
+
+</body>
+</html>
